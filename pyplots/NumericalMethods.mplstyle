@@ -14,12 +14,14 @@ ytick.labelsize : 16
 xtick.top: True
 xtick.direction: in 
 xtick.major.size: 7
-xtick.major.width: 2xtick.minor.size: 5
+xtick.major.width: 2
+xtick.minor.size: 5
 xtick.minor.width: 2
 
 # y-axis
 ytick.right: True
 ytick.direction: in
 ytick.major.size: 7
-ytick.major.width: 2ytick.minor.size: 5
+ytick.major.width: 2
+ytick.minor.size: 5
 ytick.minor.width: 2
