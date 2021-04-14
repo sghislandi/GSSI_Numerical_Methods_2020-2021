@@ -31,8 +31,8 @@ double integrate(int N){
 
 int main(){
 
-    int N_max = pow(2,20);
-    ofstream file_errors("Simpson_approximation_errors.txt", ofstream::trunc);
+    int N_max = pow(2,25);
+    ofstream file_errors("../../output/simpson_integration/simpson_approximation_errors.txt", ofstream::trunc);
     file_errors<< "N" << "\t" << "Error"<<endl;
 
     for(int N = 2; N< N_max; N*=2){
