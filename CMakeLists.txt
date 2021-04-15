@@ -7,4 +7,5 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 
+MAKE_DIRECTORY(output/simpson_integration)
 add_executable(simpson_integration src/simpson_integration/simpson_integration.cpp)
