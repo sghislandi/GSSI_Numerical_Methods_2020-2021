@@ -32,11 +32,14 @@ double integrate(int N){
 int main(){
 
     int N_max = pow(2,25);
+    double error;
     ofstream file_errors("../build/output/simpson_integration/simpson_approximation_errors.txt", ofstream::trunc);
     file_errors<< "N" << "\t" << "Error"<<endl;
 
     for(int N = 2; N< N_max; N*=2){
-        file_errors<< N << "\t" << integrate(N)-exact_integral<<endl;
+        error = integrate(N) - exact_integral;
+        file_errors<< N << "\t" << error <<endl;
+        cout << "Step " << N << "  Error: " << error << endl;
     }
     
     file_errors.close();
