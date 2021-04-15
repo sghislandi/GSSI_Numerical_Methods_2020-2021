@@ -17,10 +17,8 @@ double function(double x){
 }
 
 double integrate(int N){
-    
     double h = (double) (b-a)/N;
     double approx_integral = function(a)+function(b);
-
     for(int i=1; i < N; i++){ 
         if(i%2==0) approx_integral +=  2*function(a+i*h);
         else approx_integral +=  4*function(a+i*h);
