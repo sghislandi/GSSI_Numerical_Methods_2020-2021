@@ -10,6 +10,5 @@ plt.yscale('log')
 plt.xlabel('Number of divisions')
 plt.ylabel('Error')
 
-
 plt.savefig('simpson_approximation_errors.pdf')
 print("Output saved at ../build/output/simpson_integration/simpson_approximation_errors.pdf")
