@@ -39,10 +39,11 @@ int main(){
     for(int N = 2; N< N_max; N*=2){
         error = integrate(N) - exact_integral;
         file_errors<< N << "\t" << error <<endl;
-        cout << "Step " << N << "  Error: " << error << endl;
+        cout << "Step " << log2(N) << "  Error: " << error << endl;
     }
     
     file_errors.close();
+    cout << "Output saved in ../build/output/simpson_integration/simpson_approximation_errors.txt" << endl;
 
     return 0;
 }
