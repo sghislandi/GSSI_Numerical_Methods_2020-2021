@@ -20,3 +20,5 @@ if(HAVE_FLAG_STD_CXX14)
 else()
     add_executable(simpson_integration src/simpson_integration/simpson_integration.cpp)
 endif()
+
+
