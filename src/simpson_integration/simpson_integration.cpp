@@ -12,16 +12,16 @@
 using namespace std;
 
 
-double function(double x){
+double func(double x){
     return pow(x,4) -2*x + 1;
 }
 
 double integrate(int N){
     double h = (double) (b-a)/N;
-    double approx_integral = function(a)+function(b);
+    double approx_integral = func(a)+func(b);
     for(int i=1; i < N; i++){ 
-        if(i%2==0) approx_integral +=  2*function(a+i*h);
-        else approx_integral +=  4*function(a+i*h);
+        if(i%2==0) approx_integral +=  2*func(a+i*h);
+        else approx_integral +=  4*func(a+i*h);
     }
 
     return approx_integral *= h/3.;
