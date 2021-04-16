@@ -11,11 +11,11 @@ except:
     exit()
 
 plt.plot(N,np.abs(err),'o')
-plt.title('Simpson rule integral approximation error')
+plt.title('Simpson method approximation error')
 plt.xscale('log')
 plt.yscale('log')
 plt.xlabel('Number of divisions')
-plt.ylabel('Error')
+plt.ylabel(r'$\left|I_{Simpson} - I\right|$')
 
 plt.savefig('simpson_approximation_errors.pdf')
 print("Output saved as simpson_approximation_errors.pdf")
