@@ -10,9 +10,9 @@ except:
     print("No output file found")
     exit()
 
-plt.plot(N,np.abs(err),'o')
+plt.plot(2**N,np.abs(err),'o')
 plt.title('Simpson rule integral approximation error')
-plt.xscale('log')
+plt.xscale('log',base=2)
 plt.yscale('log')
 plt.xlabel('Number of divisions')
 plt.ylabel('Error')
