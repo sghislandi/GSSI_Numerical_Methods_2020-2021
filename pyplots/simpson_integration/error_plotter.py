@@ -1,10 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-try: 
-    N, err = np.loadtxt('../../build/output/simpson_integration/simpson_approximation_errors_v1.txt', skiprows = 1, unpack = True)
-except:
-    N, err = np.loadtxt('../../build/output/simpson_integration/simpson_approximation_errors.txt', skiprows = 1, unpack = True)
+try:
+    try: 
+        N, err = np.loadtxt('../../build/output/simpson_integration/simpson_approximation_errors_v1.txt', skiprows = 1, unpack = True)
+    except:
+        N, err = np.loadtxt('../../build/output/simpson_integration/simpson_approximation_errors.txt', skiprows = 1, unpack = True)
+except: 
+    print("No output file found")
+    exit()
 
 plt.plot(N,np.abs(err),'o')
 plt.title('Simpson rule integral approximation error')
