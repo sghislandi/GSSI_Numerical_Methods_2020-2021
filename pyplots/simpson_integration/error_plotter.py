@@ -1,13 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os.path
 
 #Reading the output
-try:
-    try: 
-        N, deviation = np.loadtxt('../../build/output/simpson_integration/simpson_approximation_errors_v1.txt', skiprows = 1, unpack = True)
-    except:
-        N, deviation = np.loadtxt('../../build/output/simpson_integration/simpson_approximation_errors.txt', skiprows = 1, unpack = True)
-except: 
+if os.path.isfile('../../build/output/simpson_integration/simpson_approximation_errors_v1.txt'):
+    N, deviation = np.loadtxt('../../build/output/simpson_integration/simpson_approximation_errors_v1.txt', skiprows = 1, unpack = True)
+elif os.path.isfile('../../build/output/simpson_integration/simpson_approximation_errors.txt'):
+    N, deviation = np.loadtxt('../../build/output/simpson_integration/simpson_approximation_errors.txt', skiprows = 1, unpack = True)
+else:
     print("No output file found")
     exit()
 
@@ -17,23 +17,36 @@ b = 2
 third_derivative_a = 0
 third_derivative_b = 48
 
+#Error computed as I_simpson - I_exact
+log_deviation = np.log10(abs(deviation))
+
 #Error from theory
-theoretical_error = 1/90*(third_derivative_b-third_derivative_a)*((b-a)/(2**N))**4
+log_theoretical_error = np.log10(1/90*(third_derivative_b-third_derivative_a)*((b-a)/(2**N))**4)
 
 #Error computed trhough the difference between I(N) and I(2N)
-approximated_error= [None] * (deviation.size-1)
+log_approximated_error= [None] * (deviation.size-1)
 for i in range(0,deviation.size-1):
-    approximated_error[i] = 1/15*(deviation[i+1]-deviation[i])
+    log_approximated_error[i] = np.log10(1/15*(abs(deviation[i+1]-deviation[i])))
+
+#Definition of useful quantities
+N = 2**N
+logN = np.log10(N)
 
 #Plots
-plt.plot(2**N,np.abs(deviation),'o', label = r'$\left| \widetilde{I} - I \right|$')
-plt.plot(2**N,theoretical_error,'o', color = 'red', label = 'Error from theory')
-plt.plot(2**N[:-1],approximated_error,'o',label = 'Numerical error' )
-plt.xscale('log',base=2)
-plt.xlabel('Number of divisions')
-plt.ylabel('Value')
-plt.yscale('log')
+plt.plot(logN,log_deviation,'o',markersize=5, label = r'$\left| \widetilde{I} - I \right|$')
+plt.plot(logN,log_theoretical_error,'o', markersize=5, color = 'red', label = 'Error from theory')
+plt.plot(logN[1:],log_approximated_error,'o', markersize=5, label = 'Numerical error' )
+plt.xlabel('Log(N)')
+plt.ylabel('Log(value)')
 plt.legend()
 
+fit_deviation = np.polyfit(logN[0:10], log_deviation[0:10], 1)
+fit_theoretical_error = np.polyfit(logN[0:10], log_theoretical_error[0:10], 1)
+fit_approximated_error = np.polyfit(logN[0:10], log_approximated_error[0:10], 1)
+
+print(f'Deviation slope = {fit_deviation[0]}')
+print(f'Theoretical slope = {fit_theoretical_error[0]}')
+print(f'Approximated slope = {fit_approximated_error[0]}')
+
 plt.savefig('simpson_approximation_errors.pdf')
-print("Output saved as simpson_approximation_errors.pdf")
+print("\nOutput saved as simpson_approximation_errors.pdf")
