@@ -6,18 +6,14 @@
 #include <numeric>
 #include <vector>  
 
-#define a  0
-#define b  2
-#define exact_integral 4.4
-
 // function to be integrated
 auto func = [](double x) {return std::pow(x,4) -2*x + 1;};
 
 // Simpson integration method
-double integrate(int N){
+double integrate(int N, const double a, const double b){
     std::vector<double> funcArray (N-1);
     double h = (double) (b-a)/N;
-    std::generate (funcArray.begin(), funcArray.end(), [h,i=1]() mutable {
+    std::generate (funcArray.begin(), funcArray.end(), [a,h,i=1]() mutable {
         return i % 2 == 0 ? 2*func(a+h*i++) : 4*func(a+h*i++);    
     });
     return 1/3. * h * std::accumulate(funcArray.begin(), funcArray.end(), func(a) + func(b));
@@ -25,6 +21,9 @@ double integrate(int N){
 
 
 int main(){
+    const double a = 0;
+    const double b = 2;
+    const double exact_integral = 4.4;
 
     int Nmin = 2;
     int Nmax = pow(2,25);
@@ -33,7 +32,7 @@ int main(){
     file_errors << "log2(N)" << "\t" << "Error"<<std::endl;
 
     while(Nmin < Nmax){
-        error = integrate(Nmin) - exact_integral;
+        error = integrate(Nmin, a, b) - exact_integral;
         file_errors<< std::log2(Nmin) << "\t" << error <<std::endl;
         std::cout << "Step " << std::log2(Nmin) << "  Error: " << error << std::endl;
         Nmin *= 2;
