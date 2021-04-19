@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import os.path
 
 #Reading the output
-if os.path.isfile('../../build/output/simpson_integration/simpson_approximation_errors_v1.txt'):
+if os.path.exists('../../build/output/simpson_integration/simpson_approximation_errors_v1.txt'):
     N, deviation = np.loadtxt('../../build/output/simpson_integration/simpson_approximation_errors_v1.txt', skiprows = 1, unpack = True)
-elif os.path.isfile('../../build/output/simpson_integration/simpson_approximation_errors.txt'):
+elif os.path.exists('../../build/output/simpson_integration/simpson_approximation_errors.txt'):
     N, deviation = np.loadtxt('../../build/output/simpson_integration/simpson_approximation_errors.txt', skiprows = 1, unpack = True)
 else:
     print("No output file found")
