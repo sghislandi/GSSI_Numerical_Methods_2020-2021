@@ -1,6 +1,5 @@
 project(NumericalMethods)
 
-
 cmake_minimum_required(VERSION 3.10)
 include(CheckCXXCompilerFlag)
 
@@ -20,6 +19,5 @@ endif()
 add_executable(ODE src/ODE/ODE.cpp)
 
 add_executable(test test/ODE/test.cpp)
-
-
+set_target_properties(test PROPERTIES RUNTIME_OUTPUT_DIRECTORY "../test/ODE")
 
