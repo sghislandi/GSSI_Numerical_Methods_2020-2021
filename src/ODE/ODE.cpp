@@ -34,7 +34,7 @@ int main(){
     const double tf = 50;       //in s
 
     //Number of initial divisions
-    const int N = 100000000;
+    const int N = 10000000;
     
     /////////////////////////////////////////////////
     double h = (double)(tf - t0)/N;
@@ -47,6 +47,7 @@ int main(){
     y[0] = y0;
     std::ofstream output("../build/output/ODE/ODE.txt", std::ofstream::trunc);
 
+    //Runge-Kutta routine
     while(t0+step*h<=tf){
         RK2(h,step,x,y);
         if(step % 10000 == 0){

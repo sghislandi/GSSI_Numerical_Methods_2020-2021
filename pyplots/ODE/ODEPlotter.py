@@ -38,7 +38,7 @@ results = '\n'.join((
 
 
 #Text box with fit results
-props = dict(boxstyle='round', alpha=0.5, color='orange')
+props = dict(boxstyle='round', alpha=0.8, facecolor='white')
 ax3.text(0.78, 0.35, results, transform=ax3.transAxes, fontsize=14,
         verticalalignment='top', bbox=props)
 
