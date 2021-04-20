@@ -6,6 +6,8 @@ include(CheckCXXCompilerFlag)
 
 
 MAKE_DIRECTORY(output/simpson_integration)
+MAKE_DIRECTORY(output/ODE)
+
 
 check_cxx_compiler_flag(-std=c++14 HAVE_FLAG_STD_CXX14)
 
@@ -14,5 +16,8 @@ if(HAVE_FLAG_STD_CXX14)
 else()
     add_executable(simpson_integration src/simpson_integration/simpson_integration.cpp)
 endif()
+
+add_executable(ODE src/ODE/ODE.cpp)
+
 
 
