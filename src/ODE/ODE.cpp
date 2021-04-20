@@ -31,7 +31,7 @@ int main(){
 
     //Time
     const double t0 = 0;        //in s
-    const double tf = 20;       //in s
+    const double tf = 50;       //in s
 
     //Number of initial divisions
     const int N = 100000000;
