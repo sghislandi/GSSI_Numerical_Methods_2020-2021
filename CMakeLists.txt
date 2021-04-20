@@ -19,5 +19,7 @@ endif()
 
 add_executable(ODE src/ODE/ODE.cpp)
 
+add_executable(test test/ODE/test.cpp)
+
 
 
