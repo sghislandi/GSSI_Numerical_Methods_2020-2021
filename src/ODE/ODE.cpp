@@ -49,7 +49,7 @@ int main(){
 
     while(t0+step*h<=tf){
         RK2(h,step,x,y);
-        if(step % 100000 == 0){
+        if(step % 10000 == 0){
         output << t0+step*h << "\t" << x[step] << "\t" << y[step] << std::endl; 
         }
         step++;

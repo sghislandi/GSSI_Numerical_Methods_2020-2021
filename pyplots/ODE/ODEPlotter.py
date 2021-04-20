@@ -12,7 +12,12 @@ else:
 
 
 #Plots
-plt.plot(t,x,'o',markersize=5)
+fig, (ax1, ax2) = plt.subplots(2)
+ax2.set_xlabel('Time [s]')
+ax1.set_ylabel(r'$\theta$ [rad]')
+ax2.set_ylabel(r'$\omega$ [Hz]')
+ax1.plot(t,x,'o',markersize=2)
+ax2.plot(t,y,'o',markersize=2)
 
 
 plt.savefig('ODE.pdf')
