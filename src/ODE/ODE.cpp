@@ -19,20 +19,21 @@ void RK2(double h, int step, std::vector<double> &x, std::vector<double> &y){
     return;
 }
 
+//Adaptive step size method
 void AdaptiveRK(double *h, std::vector<double> &t, std::vector<double> &x, std::vector<double> &y, const double accuracy){
     double hval = *h;
     std::vector<double> xtemp1(1,x.back());
     std::vector<double> ytemp1(1,y.back());
     std::vector<double> xtemp2(1,x.back());
     std::vector<double> ytemp2(1,y.back());
-    RK2(hval, 1, xtemp1, ytemp1);
+    RK2(hval, 1, xtemp1, ytemp1);       //Compute x_n-->x_n+1-->x_n+2
     RK2(hval, 2, xtemp1, ytemp1);
-    RK2(2.*(hval), 1, xtemp2, ytemp2);
+    RK2(2.*(hval), 1, xtemp2, ytemp2);  //Compute x_n---->x_n+2
 
     double rho = (double) 6.*hval*accuracy/std::abs(xtemp1[2]-xtemp2[1]);
-    double diff = std::abs(xtemp1[2]-xtemp2[1]);
 
-    if(rho>=1){
+    //if rho>1 I keep x and y but I make the step larger (avoiding to enlarge it too much)
+    if(rho>=0.99){
         t.push_back(t.back()+hval);
         t.push_back(t.back()+hval);
         x.push_back(xtemp1[1]);
@@ -41,6 +42,7 @@ void AdaptiveRK(double *h, std::vector<double> &t, std::vector<double> &x, std::
         y.push_back(ytemp1[2]);
         *h = hval*(std::min(2.,std::pow(rho,0.5)));
     }
+    //if rho<1 I make the step smaller and I repeat the RK
     else{
         *h = (double)hval*(std::max(0.5,std::pow(rho,0.5)));
         AdaptiveRK(h,t,x,y,accuracy);
@@ -92,8 +94,10 @@ int main(){
     std::vector<double> tAdaptive(1,t0);
     std::vector<double> xAdaptive(1,x0);
     std::vector<double> yAdaptive(1,y0);
+
     double *h;
     h = &hValue;
+
     step = 1;
     output << tAdaptive[0] << "\t" << xAdaptive[0] << "\t" << yAdaptive[0] << std::endl;  
     while(true){
