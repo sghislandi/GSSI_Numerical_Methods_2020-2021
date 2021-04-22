@@ -68,7 +68,6 @@ int main(){
             RK2(h,step,x,y);
             maxErrorX = std::max((double)std::abs(x[step] - fx(t0+step*h))/fx(t0+step*h),maxErrorX);
             maxErrorY = std::max((double)std::abs(y[step] - fy(t0+step*h))/fy(t0+step*h),maxErrorY);
-            //std::cout << step << "  " << (double)std::abs(x[step] - fx(t0+step*h))/fx(t0+step*h) << std::endl;
             step++;
         }
         output << N << "\t" << maxErrorX << "\t" << maxErrorY << std::endl; 
