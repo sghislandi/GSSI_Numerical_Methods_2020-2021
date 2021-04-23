@@ -12,29 +12,38 @@ else:
     exit()
 ########################################################
 
-deltaT = int((t[1]-t[0])*1000)
+deltaT = int((t[1]-t[0])*1000)  #Time interval between different x or y samplings
 
+#Animation class in which I draw and set the positions of the objects
 class Animation:
     def __init__(self, gw):
+        #Window
         self.window = gw
+
+        #Initial conditions
         self.xoff, self.yoff = 300, 300
         self.angle = 150*math.pi/180
         self.sina = math.sin(self.angle)
         self.cosa = math.cos(self.angle)
+
+        #Rod
         self.rodLength = 150
-        self.bobRadius = 15
-        self.bobCenter = self.rodLength + self.bobRadius
         self.rodx0, self.rody0 = self.xoff, self.yoff
         self.rx1 = self.rodx0
         self.ry1 = self.rody0
         self.rx2 = self.xoff + self.rodLength*self.sina
         self.ry2 = self.yoff + self.rodLength*self.cosa
+
+        #Pendulum
+        self.bobRadius = 15
+        self.bobCenter = self.rodLength + self.bobRadius
         self.bx1 = self.xoff - self.bobRadius + self.bobCenter*self.sina
         self.by1 = self.yoff - self.bobRadius + self.bobCenter*self.cosa
         self.bx2 = self.xoff + self.bobRadius + self.bobCenter*self.sina
         self.by2 = self.yoff + self.bobRadius + self.bobCenter*self.cosa
+        
+        #Others
         self.step = 0
-        self.actualTime = 0
         self.xText = 500
         self.yText = 20
  
@@ -84,7 +93,6 @@ class Animation:
         self.bx2 = self.xoff + self.bobRadius + self.bobCenter*self.sina
         self.by2 = self.yoff + self.bobRadius + self.bobCenter*self.cosa
         self.cnv.itemconfigure(self.time, text= 'Time = {:.1f} s'.format(t[self.step]))
-        self.actualTime = t[self.step]
         self.step += 1
  
         self.cnv.coords(self.rod,
@@ -98,15 +106,21 @@ class Animation:
                         self.bx2,
                         self.by2)
         self.window.update()
+
+        #If I reach the last vector element, close the window
         if self.step < len(x):
             self.cnv.after(deltaT, self.animate)
         else:
             exit()
 
- 
+#Tkinter project definition
 root = Tk()
 root.title('Pendulum')
-root.geometry('600x600+100+50')
+root.geometry('600x600')
 root.resizable(False, False)
+
+#Class
 a = Animation(root)
+
+#Loop
 root.mainloop() 
