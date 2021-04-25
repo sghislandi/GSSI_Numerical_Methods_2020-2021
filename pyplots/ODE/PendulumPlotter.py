@@ -12,8 +12,6 @@ else:
     exit()
 ########################################################
 
-deltaT = int((t[1]-t[0])*1000)  #Time interval between different x or y samplings
-
 #Animation class in which I draw and set the positions of the objects
 class Animation:
     def __init__(self, gw):
@@ -109,7 +107,7 @@ class Animation:
 
         #If I reach the last vector element, close the window
         if self.step < len(x):
-            self.cnv.after(deltaT, self.animate)
+            self.cnv.after(10, self.animate)
         else:
             exit()
 

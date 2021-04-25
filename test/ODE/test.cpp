@@ -24,10 +24,10 @@ auto fy(double t){
 //Runge-Kutta method
 void RK2(double h, int step, std::vector<double> &x, std::vector<double> &y){
     double k1 = h*y[step-1];
-    double k2 = h*dydt(x[step-1]);
+    double k2 = 0.5*h*h*dydt(x[step-1]);
     double k3 = h*dydt(x[step-1]+0.5*k1);
     y[step] = y[step-1] + k3;
-    x[step] = x[step-1] + k1;
+    x[step] = x[step-1] + k1 + k2;
     return;
 }
 
@@ -35,15 +35,15 @@ int main(){
 
     //Time interval
     const double t0 = 1;
-    const double tf = 10;
+    const double tf = 50;
 
     //Initial condition
     const double x0 = 1;
     const double y0 = 3;
 
     //Number of initial divisions
-    const int nMin = 1000;
-    const int nMax = 10e8;
+    const int nMin = 100;
+    const int nMax = 10e6;
     int N = nMin;
     double maxErrorX;
     double maxErrorY;

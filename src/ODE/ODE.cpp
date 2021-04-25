@@ -12,10 +12,10 @@ auto dydt(double x){
 //Runge-Kutta 2nd order method applied to dy/dx = f(x)
 void RK2(double h, int step, std::vector<double> &x, std::vector<double> &y){
     double k1 = h*y[step-1];
-    double k2 = h*dydt(x[step-1]);
+    double k2 = 0.5*h*h*dydt(x[step-1]);
     double k3 = h*dydt(x[step-1]+0.5*k1);
     y.push_back(y[step-1] + k3);
-    x.push_back(x[step-1] + k1);
+    x.push_back(x[step-1] + k1 + k2);
     return;
 }
 
@@ -56,11 +56,11 @@ int main(){
     //Fixed quantities
     const double pi = std::atan(1)*4;
     const double accuracy = 1e-5;
-    const int N = 10000000;
+    const int N = 25000;
 
     //Time
     const double t0 = 0;        //in s
-    const double tf = 20;       //in s
+    const double tf = 50;       //in s
 
     //Initial conditions
     const double x0 = 179.*pi/180.;   //in rad
@@ -78,7 +78,7 @@ int main(){
 
     while(true){
         RK2(hValue,step,x,y);
-        if(step % 10000 == 0){
+        if(step % 10 == 0){
         output << t0 + step*hValue << "\t" << x.back() << "\t" << y.back() << std::endl;  
         }
         
@@ -102,7 +102,7 @@ int main(){
     output << tAdaptive[0] << "\t" << xAdaptive[0] << "\t" << yAdaptive[0] << std::endl;  
     while(true){
         AdaptiveRK(h, tAdaptive, xAdaptive, yAdaptive, accuracy);
-        if(step % 10000 == 0){
+        if(step % 10 == 0){
         outputAdaptive << tAdaptive.back() << "\t" << xAdaptive.back() << "\t" << yAdaptive.back() << std::endl;  
         }
         
