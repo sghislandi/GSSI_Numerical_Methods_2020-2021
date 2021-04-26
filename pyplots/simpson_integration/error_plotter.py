@@ -3,10 +3,19 @@ import matplotlib.pyplot as plt
 import os.path
 
 #Reading the output
+flag = 0
 if os.path.exists('../../build/output/simpson_integration/simpson_approximation_errors_v1.txt'):
+    flag = 1
     N, deviation = np.loadtxt('../../build/output/simpson_integration/simpson_approximation_errors_v1.txt', skiprows = 1, unpack = True)
+elif os.path.exists('output/simpson_integration/simpson_approximation_errors_v1.txt'):
+    flag = 2
+    N, deviation = np.loadtxt('output/simpson_integration/simpson_approximation_errors_v1.txt', skiprows = 1, unpack = True)
 elif os.path.exists('../../build/output/simpson_integration/simpson_approximation_errors.txt'):
+    flag = 3
     N, deviation = np.loadtxt('../../build/output/simpson_integration/simpson_approximation_errors.txt', skiprows = 1, unpack = True)
+elif os.path.exists('output/simpson_integration/simpson_approximation_errors.txt'):
+    flag = 4
+    N, deviation = np.loadtxt('output/simpson_integration/simpson_approximation_errors.txt', skiprows = 1, unpack = True)
 else:
     print("No output file found")
     exit()
@@ -48,5 +57,9 @@ print(f'Deviation slope = {fit_deviation[0]}')
 print(f'Theoretical slope = {fit_theoretical_error[0]}')
 print(f'Approximated slope = {fit_approximated_error[0]}')
 
-plt.savefig('simpson_approximation_errors.pdf')
-print("\nOutput saved as simpson_approximation_errors.pdf")
+if(flag == 1 or flag == 3):
+    plt.savefig('simpson_approximation_errors.pdf')
+else:
+    plt.savefig('../pyplots/simpson_integration/simpson_approximation_errors.pdf')
+
+print("\nCreated plot at pyplots/simpson_approximation_errors.pdf")

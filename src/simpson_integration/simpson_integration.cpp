@@ -38,8 +38,14 @@ int main(){
     }
     
     file_errors.close();
-    std::cout << "Output saved in ../build/output/simpson_integration/simpson_approximation_errors.txt" << std::endl;
 
+    std::cout << "Output saved in ../build/output/simpson_integration/simpson_approximation_errors.txt" << std::endl;
+    std::cout << "Running python scripts to plot results..." << std::endl;
+    std::string filename = "../pyplots/simpson_integration/error_plotter.py";
+    std::string command = "python ";
+    command += filename;
+    system(command.c_str());
+    
     return 0;
 }
 

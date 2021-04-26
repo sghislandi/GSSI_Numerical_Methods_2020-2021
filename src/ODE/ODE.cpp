@@ -111,8 +111,13 @@ int main(){
     }
 
     outputAdaptive.close();
+    
     std::cout << "Output saved in output/ODE/ODE_Adaptive.txt" << std::endl;
-
+    std::cout << "Running python scripts to plot results..." << std::endl;
+    std::string filename = "../pyplots/ODE/ODEPlotter.py";
+    std::string command = "python ";
+    command += filename;
+    system(command.c_str());
 
     return 0;
 }
