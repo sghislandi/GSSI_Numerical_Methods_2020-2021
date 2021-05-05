@@ -82,5 +82,36 @@ std::vector<double> CrankNicolsonDiffusion(double alpha, std::vector<double>& Q,
 
 int main(){
 
+    const size_t xDivision = std::pow(2,8);
+    const double xMin = -1.;
+    const double xMax = 1.;
+    const double dx = (xMax-xMin) / xDivision;
+    const double dt = std::pow(10,-3);
+
+    const double D = 0.1;
+    const double alpha = D*dt/2./dx/dx;
+
+    std::vector<double> f(xDivision);
+    std::vector<double> Q(xDivision);
+
+    f[0] = 0;
+    f[xDivision] = 0;
+    Q[0] = 0;
+    Q[xDivision-1] = 0;
+    for(int i = 1; i < xDivision; i++){
+        f[i] = uAnalytical(xMin + (double)i*dx);
+        Q[i] = M_PI*M_PI/4.*D*dt*uAnalytical(xMin + (double)i*dx);
+    }
+
+    std::vector<double> fNew = f;
+
+    
+    fNew = CrankNicolsonDiffusion(alpha, Q, fNew);
+
+    for(int i = 0; i<xDivision; i++){
+        std::cout << f[i] << std::endl;
+    }
+
+    
     return 0;
 }
