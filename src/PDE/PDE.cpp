@@ -16,6 +16,23 @@ double ComputeRMS(std::vector<double> u, const double xMin, const double dx){
     return std::sqrt(RMS / (double) N);
 }
 
+void saveIntermediateFunctions(const double xMin, const double dx, const int N,
+                               std::vector<double> f0, std::vector<double> f1,
+                               std::vector<double> f2, std::vector<double> f4,
+                               std::vector<double> f8, std::vector<double> f16,
+                               std::vector<double> f){
+    std::ofstream outputIntermediate("output/PDE/f.txt", std::ofstream::trunc);
+    for(int i=1; i < N-1; i++){
+        outputIntermediate << xMin + i*dx << "\t" << f0[i] << "\t" << f1[i] << "\t" 
+                           << f2[i] << "\t" << f4[i] << "\t" << f8[i] << "\t" 
+                           << f16[i] << "\t" << f[i] << "\t" << uAnalytical(xMin + i*dx) << std::endl;
+    }
+    outputIntermediate.close();
+    std::cout << "Output saved in output/PDE/f.txt" << std::endl;
+
+    return;
+}
+
 int solve_tridiag_sym(const std::vector<double>& diag, const std::vector<double>& offdiag, 
                       const std::vector<double>& rhs, std::vector<double>& x, size_t N) {
     int status = 0;
