@@ -65,4 +65,8 @@ if(flag == 1 or flag == 3):
 else:
     plt.savefig('../pyplots/simpson_integration/simpson_approximation_errors.pdf')
 
+<<<<<<< HEAD
 print("\nOutput saved in pyplots/simpson_approximation_errors.pdf")
+=======
+print("\nCreated plot at pyplots/simpson_integration/simpson_approximation_errors.pdf")
+>>>>>>> 0f29f68ab4eca07e61e77ae6e3c3984178e08723
