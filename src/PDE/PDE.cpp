@@ -16,6 +16,29 @@ double ComputeRMS(std::vector<double> u, const double xMin, const double dx){
     return std::sqrt(RMS / (double) N);
 }
 
+std::vector<double> CrankNicolson(std::vector<double> u, std::vector<double> Q, double alpha) {
+    auto N = u.size();
+    std::vector<double> uNew(N);
+    std::vector<double> diagonal(N-2, 1. + 2*alpha);
+    std::vector<double> offdiag(N-3, -alpha);
+    std::vector<double> rhs(N-2);
+
+    rhs = Q;
+    for (int i=1; i<N-1; ++i) {
+    rhs[i-1] += (1-2.*alpha)*u[i] + alpha*(u[i-1] + u[i+1]);
+    }
+
+    std::vector<double> solution(N - 2);
+    solve_tridiag_sym(diagonal, offdiag, rhs, solution, solution.size());
+
+    for (int i=1; i<N-1; ++i){
+        uNew[i] = solution[i-1];
+    }
+    uNew[0] = 0.;
+    uNew[N-1] = 0.;
+
+return uNew;
+}
 
 std::vector<double> CNLoop(int N, const double dt, const double tMax){
     std::vector<double> errors;
