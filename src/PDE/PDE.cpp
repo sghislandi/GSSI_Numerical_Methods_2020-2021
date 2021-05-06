@@ -3,10 +3,12 @@
 #include <iostream>
 #include <fstream>
 
+/*Steady state solution of the considered diffusion equation*/
 double uAnalytical(double x){
     return std::cos(M_PI*x/2.);
 }
 
+/*Compute norm 2 between the numerical and the analytical solution*/
 double ComputeRMS(std::vector<double> u, const double xMin, const double dx){
     double RMS = 0;
     size_t N = u.size();
@@ -16,6 +18,7 @@ double ComputeRMS(std::vector<double> u, const double xMin, const double dx){
     return std::sqrt(RMS / (double) N);
 }
 
+/*Save the analytical solution at different time steps to plot its evolution*/
 void saveIntermediateFunctions(const double xMin, const double dx, const int N,
                                std::vector<double> f0, std::vector<double> f1,
                                std::vector<double> f2, std::vector<double> f4,
@@ -33,6 +36,8 @@ void saveIntermediateFunctions(const double xMin, const double dx, const int N,
     return;
 }
 
+/*Solve tridiagonal system where the matrix to be inverted is symmetric (taken by the GSL
+libraries and implemented for std::vector)*/
 int solve_tridiag_sym(const std::vector<double>& diag, const std::vector<double>& offdiag, 
                       const std::vector<double>& rhs, std::vector<double>& x, size_t N) {
     int status = 0;
@@ -70,6 +75,7 @@ int solve_tridiag_sym(const std::vector<double>& diag, const std::vector<double>
     return status;
 }
 
+/*Crank Nicolson implicit method for diffusion equation*/
 std::vector<double> CrankNicolson(std::vector<double> u, std::vector<double> Q, double alpha) {
     auto N = u.size();
     std::vector<double> uNew(N);
@@ -94,6 +100,7 @@ std::vector<double> CrankNicolson(std::vector<double> u, std::vector<double> Q, 
 return uNew;
 }
 
+/*Loop application of Cranc Nicolson method over time*/
 std::vector<double> CNLoop(int N, const double dt, const double tMax){
     std::vector<double> errors;
     
