@@ -7,6 +7,15 @@ double uAnalytical(double x){
     return std::cos(M_PI*x/2.);
 }
 
+double ComputeRMS(std::vector<double> u, const double xMin, const double dx){
+    double RMS = 0;
+    size_t N = u.size();
+    for(int i=1; i<N-1; i++){
+        RMS += std::pow(u[i] - uAnalytical(xMin + (double)i*dx),2);
+    }
+    return std::sqrt(RMS / (double) N);
+}
+
 int main(){
     std::ofstream output("output/PDE/PDE_2Norm.txt", std::ofstream::trunc);
 
