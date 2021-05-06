@@ -162,6 +162,7 @@ int main(){
     output.close();
     std::cout << "Output saved in output/PDE/PDE_2Norm.txt" << std::endl;
 
+    std::cout << "\nRunning python scripts to plot results..." << std::endl;
     std::string filename = "../pyplots/PDE/PDEPlotter.py";
     std::string command = "python ";
     command += filename;

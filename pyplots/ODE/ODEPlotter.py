@@ -73,6 +73,6 @@ if(flag):
         plt.savefig('ODE_Adaptive.pdf')
     else:
         plt.savefig('../pyplots/ODE/ODE_Adaptive.pdf')
-    print('Created plot at pyplots/ODE/ODE_Adaptive.pdf')
+    print('Output saved in pyplots/ODE/ODE_Adaptive.pdf')
 else:
     print("ODE_Adaptive.txt not found")

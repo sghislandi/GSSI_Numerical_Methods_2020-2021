@@ -53,13 +53,16 @@ fit_deviation = np.polyfit(logN[0:10], log_deviation[0:10], 1)
 fit_theoretical_error = np.polyfit(logN[0:10], log_theoretical_error[0:10], 1)
 fit_approximated_error = np.polyfit(logN[0:10], log_approximated_error[0:10], 1)
 
+print('**********************')
+print('PYTHON SCRIPT RESULTS:')
 print(f'Deviation slope = {fit_deviation[0]}')
 print(f'Theoretical slope = {fit_theoretical_error[0]}')
 print(f'Approximated slope = {fit_approximated_error[0]}')
+print('**********************')
 
 if(flag == 1 or flag == 3):
     plt.savefig('simpson_approximation_errors.pdf')
 else:
     plt.savefig('../pyplots/simpson_integration/simpson_approximation_errors.pdf')
 
-print("\nCreated plot at pyplots/simpson_approximation_errors.pdf")
+print("\nOutput saved in pyplots/simpson_approximation_errors.pdf")
