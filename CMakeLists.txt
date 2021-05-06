@@ -10,6 +10,7 @@ find_package(GSL)
 
 MAKE_DIRECTORY(output/simpson_integration)
 MAKE_DIRECTORY(output/ODE)
+MAKE_DIRECTORY(output/PDE)
 
 if(HAVE_FLAG_STD_CXX14)
     set(CMAKE_CXX_FLAGS "-O3 -ftree-vectorize -std=c++14")
@@ -20,7 +21,7 @@ else()
 endif()
 
 add_executable(ODE src/ODE/ODE.cpp)
-
 add_executable(test test/ODE/test.cpp)
 set_target_properties(test PROPERTIES RUNTIME_OUTPUT_DIRECTORY "../test/ODE")
 
+add_executable(PDE src/PDE/PDE.cpp)
