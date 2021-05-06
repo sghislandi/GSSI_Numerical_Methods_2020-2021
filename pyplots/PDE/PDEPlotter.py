@@ -54,6 +54,6 @@ if(flag):
         plt.savefig('PDE.pdf')
     else:
         plt.savefig('../pyplots/PDE/PDE.pdf')
-    print('Output saved in pyplots/PDE/)
+    print('Output saved in pyplots/PDE/PDE.pdf')
 else:
     print('PDE_2Norm.txt NOT FOUND!')
