@@ -139,7 +139,6 @@ std::vector<double> CNLoop(int N, const double dt, const double tMax){
     return errors;
 }
 
-
 int main(){
     std::ofstream output("output/PDE/PDE_2Norm.txt", std::ofstream::trunc);
 
@@ -163,6 +162,10 @@ int main(){
     output.close();
     std::cout << "Output saved in output/PDE/PDE_2Norm.txt" << std::endl;
 
+    std::string filename = "../pyplots/PDE/PDEPlotter.py";
+    std::string command = "python ";
+    command += filename;
+    system(command.c_str());
     
     return 0;
 }
