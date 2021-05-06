@@ -16,6 +16,43 @@ double ComputeRMS(std::vector<double> u, const double xMin, const double dx){
     return std::sqrt(RMS / (double) N);
 }
 
+int solve_tridiag_sym(const std::vector<double>& diag, const std::vector<double>& offdiag, 
+                      const std::vector<double>& rhs, std::vector<double>& x, size_t N) {
+    int status = 0;
+    std::vector<double> alpha(N);
+    std::vector<double> z(N);
+    size_t i, j;
+
+    //Initialize and check alpha
+    alpha[0] = diag[0];
+    z[0] = rhs[0];
+    if (alpha[0] == 0) {
+        status = 1;
+    }
+
+    for (i = 1; i < N; i++){
+        const double t = offdiag[i-1] / alpha[i-1];
+        alpha[i] = diag[i] - t * offdiag[i-1];
+        z[i] = rhs[i] - t * z[i-1];
+        if(alpha[i] == 0){
+            status = 1;
+        }
+    }
+
+    x[N - 1] = z[N - 1] / alpha[N - 1];
+    if(N >= 2){
+        for (i=N-2, j=0; j<=N-2; j++, i--) {
+            x[i] = (z[i] - offdiag[i] * x[i+1]) / alpha[i];
+        }
+    }
+
+    if (status == 1){
+        std::cout << "Error : matrix must be positive definite!" << "\n";
+    }
+
+    return status;
+}
+
 std::vector<double> CrankNicolson(std::vector<double> u, std::vector<double> Q, double alpha) {
     auto N = u.size();
     std::vector<double> uNew(N);
