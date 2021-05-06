@@ -1,6 +1,7 @@
 #include <math.h>
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 #define GSL_SUCCESS 0
 
@@ -18,8 +19,10 @@ int solve_tridiag_sym(const double diag, const double offdiag, std::vector<doubl
   std::vector<double>& x, size_t N)
 {
     int status = 0;
-    double alpha, gamma;
+    double gamma;
+    std::vector<double> alpha(N);
     std::vector<double> z(N);
+
     size_t i, j;
 
     /* Cholesky decomposition
@@ -27,26 +30,26 @@ int solve_tridiag_sym(const double diag, const double offdiag, std::vector<doubl
         lower_diag(L) = gamma
         diag(D) = alpha
     */
-    alpha = diag;
+    alpha[0] = diag;
+    z[0] = rhs[0];
 
-    if (alpha == 0) {
+    if (alpha[0] == 0) {
     status = 1;
     }
 
     /* update RHS */
-    z[0] = rhs[0];
     for (i = 1; i < N; i++)
     {
-        gamma = offdiag / alpha;
-        alpha = diag - offdiag*gamma;
+        gamma = offdiag / alpha[i-1];
+        alpha[i] = diag - offdiag*gamma;
         z[i] = rhs[i] - gamma * z[i - 1];
     }
 
     /* backsubstitution */
-    x[N - 1] = z[i] / alpha;
+    x[N - 1] = z[N-1] / alpha[N-1];
     if (N >= 2){
         for (i = N - 2, j = 0; j <= N - 2; j++, i--){
-            x[i] = (z[i] - gamma * x[i + 1]) / alpha;
+            x[i] = (z[i] - gamma * x[i + 1]) / alpha[i];
         }
     }
 
@@ -79,38 +82,56 @@ std::vector<double> CrankNicolsonDiffusion(double alpha, std::vector<double>& Q,
     return uNew;
 }
 
+double ComputeRMS(std::vector<double> u, const double xMin, const double dx){
+    double RMS = 0;
+    size_t N = u.size();
+    for(int i=0; i<N; i++){
+        RMS += std::pow(u[i] - uAnalytical(xMin + (double)i*dx),2);
+    }
+    return (double)std::sqrt(RMS / (double)N);
+}
+
 
 int main(){
-
-    const size_t xDivision = std::pow(2,8);
+    //std::ofstream output("output/PDE/PDE_2Norm.txt", std::ofstream::trunc);
+    std::ofstream output("PDE_2Norm.txt", std::ofstream::trunc);
+    const int xDivision = std::pow(2,8) -1;
     const double xMin = -1.;
     const double xMax = 1.;
     const double dx = (xMax-xMin) / xDivision;
     const double dt = std::pow(10,-3);
+    const double tMax = 100;
 
     const double D = 0.1;
     const double alpha = D*dt/2./dx/dx;
 
-    std::vector<double> f(xDivision);
-    std::vector<double> Q(xDivision);
+    const int N = xDivision + 1;
 
-    f[0] = 0;
-    f[xDivision] = 0;
-    Q[0] = 0;
-    Q[xDivision-1] = 0;
-    for(int i = 1; i < xDivision; i++){
+    std::cout << N;
+    std::vector<double> f(N,0);
+    std::vector<double> Q(N,0);
+
+    for(int i = 1; i < N ; i++){
         f[i] = uAnalytical(xMin + (double)i*dx);
         Q[i] = M_PI*M_PI/4.*D*dt*uAnalytical(xMin + (double)i*dx);
     }
 
-    std::vector<double> fNew = f;
-
-    
-    fNew = CrankNicolsonDiffusion(alpha, Q, fNew);
-
-    for(int i = 0; i<xDivision; i++){
-        std::cout << f[i] << std::endl;
+    double tTemp = 0;
+    while(tTemp < tMax){
+        f = CrankNicolsonDiffusion(alpha, Q, f);
+        output << tTemp << "\t" << ComputeRMS(f, xMin, dx) << std::endl;
+        tTemp += dt;
     }
+
+    output.close();
+    std::cout << "Output saved in output/PDE/PDE_2Norm.txt" << std::endl;
+
+    std::ofstream output_f("f.txt", std::ofstream::trunc);
+    for(int i = 0; i < N; i++){
+        output_f << xMin + i*dx << "\t" << f[i]/dx << "\t" << uAnalytical(xMin + i*dx) << std::endl;
+    }
+
+    output_f.close();
 
     
     return 0;
