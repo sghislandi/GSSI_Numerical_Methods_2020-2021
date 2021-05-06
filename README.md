@@ -13,7 +13,7 @@ This repository contains:
 
 * Implementation of Runge-Kutta ODE integration (without and with adaptive step size method) for the pendulum;
 
-* Implementation of Crank-Nicolson PDE integration for diffusive equation with additional source term;
+* Implementation of Crank-Nicolson PDE integration for steady-state solution of diffusion equation;
 
 The folder 'pyplots' contains Python scripts useful to plot the results of every single executable.
 
