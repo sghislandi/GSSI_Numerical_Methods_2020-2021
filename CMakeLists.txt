@@ -5,8 +5,6 @@ cmake_minimum_required(VERSION 3.10)
 include(CheckCXXCompilerFlag)
 check_cxx_compiler_flag(-std=c++14 HAVE_FLAG_STD_CXX14)
 
-find_package(GSL)
-
 
 MAKE_DIRECTORY(output/simpson_integration)
 MAKE_DIRECTORY(output/ODE)
