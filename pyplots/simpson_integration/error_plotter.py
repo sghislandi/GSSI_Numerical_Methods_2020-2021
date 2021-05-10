@@ -42,12 +42,14 @@ N = 2**N
 logN = np.log10(N)
 
 #Plots
+fig = plt.figure(figsize=(4.5*np.sqrt(2),4.5))
 plt.plot(logN,log_deviation,'o',markersize=5, label = r'$\left| \widetilde{I} - I \right|$')
-plt.plot(logN,log_theoretical_error,'o', markersize=5, color = 'red', label = 'Error from theory')
+plt.plot(logN,log_theoretical_error,'o', markersize=5, color = 'red', label = 'Theoretical Error')
 plt.plot(logN[1:],log_approximated_error,'o', markersize=5, label = 'Numerical error' )
-plt.xlabel('Log(N)')
-plt.ylabel('Log(value)')
-plt.legend()
+plt.title("Error analysis for Simpson integration method", fontsize = 14)
+plt.xlabel('Log(N)' , fontsize = 12)
+plt.ylabel('Log(value)', fontsize = 12)
+plt.legend( fontsize = 12)
 
 fit_deviation = np.polyfit(logN[0:10], log_deviation[0:10], 1)
 fit_theoretical_error = np.polyfit(logN[0:10], log_theoretical_error[0:10], 1)

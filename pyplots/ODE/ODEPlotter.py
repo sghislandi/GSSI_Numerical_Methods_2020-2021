@@ -23,7 +23,7 @@ elif os.path.exists('output/ODE/ODE.txt'):
     #Plots
 if(flag):
     E = np.array(g*L*(1-np.cos(x)) + 0.5*y*y*L*L)/1000    #in kerg/g
-    fig, (ax1, ax2, ax3) = plt.subplots(3, figsize=(10,10))
+    fig, (ax1, ax2, ax3) = plt.subplots(3, figsize=(6.5*np.sqrt(2),6.5))
     ax1.set_title('Runge-Kutta with fixed time step', fontsize=17)
     plt.subplots_adjust(hspace=.2)
     ax3.set_xlabel('Time [s]', fontsize=15)
@@ -34,7 +34,7 @@ if(flag):
     ax2.plot(t,y,'o',markersize=2, color='tab:green')
     ax3.plot(t,E,'o',markersize=2, color='tab:blue', label='RK energy')
     ax3.hlines(correctE, t[0], t[-1], linewidth=2, color='tab:orange', linestyle='dashed', label='Correct energy')
-    ax3.legend(loc='lower right')
+    ax3.legend(loc='lower right',fontsize=12)
 
     if(flag == 1):
         plt.savefig('ODE.pdf')
@@ -56,7 +56,7 @@ elif os.path.exists('output/ODE/ODE_Adaptive.txt'):
     #Plots
 if(flag):
     E = np.array(g*L*(1-np.cos(x)) + 0.5*y*y*L*L)/1000    #in kerg/g
-    figAdaptive, (ax1Adaptive, ax2Adaptive, ax3Adaptive) = plt.subplots(3, figsize=(10,10))
+    figAdaptive, (ax1Adaptive, ax2Adaptive, ax3Adaptive) = plt.subplots(3, figsize=(6.5*np.sqrt(2),6.5))
     ax1Adaptive.set_title('Runge-Kutta with adaptive step size method', fontsize=17)
     plt.subplots_adjust(hspace=.2)
     ax3Adaptive.set_xlabel('Time [s]', fontsize=15)
@@ -67,7 +67,7 @@ if(flag):
     ax2Adaptive.plot(t,y,'o',markersize=2, color='tab:green')
     ax3Adaptive.plot(t,E,'o',markersize=2, color='tab:blue', label='RK energy')
     ax3Adaptive.hlines(correctE, t[0], t[-1], linewidth=2, color='tab:orange', linestyle='dashed', label='Correct energy')
-    ax3Adaptive.legend(loc='lower right')
+    ax3Adaptive.legend(loc='lower right',fontsize=12)
    
     if(flag == 1):
         plt.savefig('ODE_Adaptive.pdf')
